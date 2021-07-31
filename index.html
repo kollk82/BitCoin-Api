@@ -26,44 +26,54 @@
             "
             id="app"
         >
-            <div
-                class="
-                    rounded-lg
-                    bg-blue-400
-                    p-12
-                    w-4/5
-                    h-4/5
-                    flex flex-col
-                    items-center
-                    justify-center
-                "
-            >
-                <h1 class="text-7xl font-bold mb-8 text-gray-100">
+            <div class="rounded-lg bg-blue-400 p-6 flex flex-col items-center">
+                <h1 class="text-4xl font-bold mb-8 text-gray-100">
                     Bitcoin Price Index
                 </h1>
-                <div
-                    v-for="currency in info"
-                    class="currency text-4xl font-semibold text-center mb-4"
-                >
-                    {{ currency.description }}:
-                    <span
+                <section v-if="errored">
+                    <p>
+                        We're sorry, we're not able to retrieve this information
+                        at the moment, please try back later
+                    </p>
+                </section>
+                <section v-else>
+                    <div v-if="loading">Loading...</div>
+                    <div
+                        v-else
+                        v-for="currency in info"
                         class="
-                            opacity-10
-                            shadow-lg
-                            transition
-                            duration-500
-                            ease-in-outfont-bold
-                            rounded-lg
-                            hover:bg-red-600
-                            px-3
-                            hover:opacity-100 hover:text-gray-100
-                            cursor-pointer
+                            currency
+                            text-2xl
+                            font-semibold
+                            text-center
+                            mb-4
+                            flex flex-col
+                            items-center
+                            w-full
                         "
                     >
-                        <span v-html="currency.symbol"></span>
-                        {{ currency.rate_float | currencydecimal }}
-                    </span>
-                </div>
+                        {{ currency.description }}:
+                        <span
+                            class="
+                                opacity-30
+                                shadow-lg
+                                transition
+                                duration-500
+                                ease-in-outfont-bold
+                                rounded-lg
+                                hover:bg-red-600
+                                px-3
+                                hover:opacity-100 hover:text-gray-100
+                                cursor-pointer
+                                block
+                                m-auto
+                            "
+                        >
+                            <span class="" v-html="currency.symbol"></span>
+                            {{ currency.rate_float | currencydecimal }}
+                        </span>
+                    </div>
+                </section>
             </div>
         </div>
     </body>
